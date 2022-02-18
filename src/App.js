@@ -1,6 +1,16 @@
+import Breadcrumbs from "./ui-components/Breadcrumbs";
+import Content from "./ui-components/Content";
+import Header from "./ui-components/Header";
+import LeftMenu from "./ui-components/LeftMenu";
+
 function App() {
   return (
-    <h1>Updated on Amplify</h1>
+    <div>
+      <Header />
+      <LeftMenu />
+      <Breadcrumbs />
+      <Content />
+    </div>
   );
 }
 
