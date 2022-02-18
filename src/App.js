@@ -1,6 +1,6 @@
 function App() {
   return (
-    <h1>HelloWorld</h1>
+    <h1>Updated on Amplify</h1>
   );
 }
 
