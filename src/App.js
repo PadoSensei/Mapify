@@ -1,16 +1,17 @@
-import Breadcrumbs from "./ui-components/Breadcrumbs";
-import Content from "./ui-components/Content";
-import Header from "./ui-components/Header";
-import LeftMenu from "./ui-components/LeftMenu";
+import {Routes, Route} from "react-router-dom"
+import HomePage from "./pages/HomePage";
+import HelpPage from "./pages/HelpPage";
+import ProfilePage from './pages/ProfilePage'
 
 function App() {
   return (
-    <div>
-      <Header />
-      <LeftMenu />
-      <Breadcrumbs />
-      <Content />
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="help" element={<HelpPage />}/>
+        <Route path="profile" element={<ProfilePage />}/>
+      </Routes>
+    </>
   );
 }
 

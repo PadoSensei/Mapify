@@ -11,7 +11,7 @@ function Toolbar(props) {
   return (
       <div className={className}>
           {props.list.map(item => (
-              <div className={css.button}>
+              <div className={css.button} key={item.name}>
                   <IconButton
                       key={item.name} 
                       name={item.name}
