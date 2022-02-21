@@ -3,11 +3,7 @@ import css from "./content.module.css"
 import Toolbar from './Toolbar'
 
 function Content() {
-    const actionMenu = [
-        {name: "add", onClick: () => alert("Add") },
-        {name: "delete", onClick: () => alert("Delete") }
-    ]
-
+    
     const zoomMenu = [
         {name: "zoomIn", onClick: () => alert("Zoom In") },
         {name: "zoomOut", onClick: () => alert("Zoom Out") },
@@ -20,7 +16,6 @@ function Content() {
     ]
   return (
     <div className={css.container}>
-        <Toolbar list={actionMenu} type="alert" location={["vertical", "right", "bottom"]} />
         <Toolbar list={zoomMenu} type="default" location={["horizontal", "right", "top"]} />
         <Toolbar list={viewMenu} type="default" location={["vertical", "left", "bottom"]} />
     </div>

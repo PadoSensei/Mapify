@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router';
 
 function Breadcrumbs() {
   const breadcrumbs = useBreadcrumbs();
-  console.log(breadcrumbs)
   let navigate = useNavigate();
   return (
     <div className={css.container}>

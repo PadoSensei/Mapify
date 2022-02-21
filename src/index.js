@@ -3,12 +3,16 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import './index.css';
 import App from './App';
+import { StoreProvider } from './store/Store';
+import { initialState, mapNodeReducer } from './store/mapNodeReducer';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-      <App />
+      <StoreProvider initialState={initialState} reducer={mapNodeReducer}>
+        <App />
+      </StoreProvider>
     </Router>
   </React.StrictMode>,
   document.getElementById('root')
