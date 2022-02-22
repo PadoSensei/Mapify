@@ -25,6 +25,7 @@ function Home() {
         dispatch(addMapNode({
             name: "Paddy",
             comment: "we are the comment",
+            level: 0,
             id: nextId(),
             parentId: null
         }))
