@@ -3,44 +3,52 @@ import Toolbar from './Toolbar'
 import Card from './Card'
 import css from './home.module.css'
 import { useStore } from '../store/Store'
-import { addMapNode } from '../store/mapNodeReducer'
-import { removeMapNode } from '../store/mapNodeReducer'
+import { addMindMap, removeMindMap } from '../store/mindMapReducer'
 
 function Home() {
     const [state, dispatch] = useStore();
-    const { mapNodes } = state;
+    const { mindMaps } = state;
     const [selectedMap, setSelectedMap] = React.useState('')
-
-    function nextId(){
-        const data = mapNodes;
+    
+    function nextMapId(){
+        const data = mindMaps;
         if (data.length === 0) {
             return 1;
         }
-        const maxId = Math.max(...data.map(x => x.id));
+        const maxId = Math.max(...data.map(x => x.mapId));
         return maxId + 1;
     }
 
+    //Bug: This info isn't passed to Map
     function handleAdd(){
-        console.log("I'll add to globalState")
-        dispatch(addMapNode({
-            name: "Paddy",
+        const flowkey = `map-flow-${nextMapId()}`
+        dispatch(addMindMap({
+            name: "New MindMap!",
             comment: "we are the comment",
-            level: 0,
-            id: nextId(),
-            parentId: null
+            mapId: nextMapId(),
+            key: flowkey,
+            data: [{
+                id: 1,
+                type: 'input', // input node system required for colour coding nodes in map.
+                data: { 
+                label: <div>DummyData</div> 
+                },
+                position: { x: 250, y: 25 } ,   
+                }],
         }))
     }
 
     function handleDelete(){
-        console.log("delete")
         if (selectedMap === ''){
             alert("No map selected!")
+        } else {
+            dispatch(removeMindMap(selectedMap))
+            console.log("deleted")
         }
-        dispatch(removeMapNode(selectedMap))
     }
 
-    function handleSelectedMap(id){
-        setSelectedMap(id)
+    function handleSelectedMap(mapId){
+        setSelectedMap(mapId)
     }
     const actionMenu = [
         {name: "add", onClick: () => handleAdd() },
@@ -53,14 +61,14 @@ function Home() {
         <Toolbar list={actionMenu} type="alert" location={["vertical", "right", "bottom"]} />
         <div className={css.list}>
         {
-            mapNodes.map(item => (
-                <div className={css.item} key={item.id}>
+            mindMaps.map(item => (
+                <div className={css.item} key={item.mapId}>
                     <Card 
-                        id={item.id}
-                        onClick={() => handleSelectedMap(item.id)}
+                        id={item.mapId}
+                        onClick={() => handleSelectedMap(item.mapId)}
                         name={item.name}
                         comment={item.comment}
-                        isSelected={item.id === selectedMap}
+                        isSelected={item.mapId === selectedMap}
                     />
                 </div>
             ))

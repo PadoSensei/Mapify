@@ -4,13 +4,13 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import { StoreProvider } from './store/Store';
-import { initialState, mapNodeReducer } from './store/mapNodeReducer';
+import { initialState, mindMapReducer } from './store/mindMapReducer';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-      <StoreProvider initialState={initialState} reducer={mapNodeReducer}>
+      <StoreProvider initialState={initialState} reducer={mindMapReducer}>
         <App />
       </StoreProvider>
     </Router>
