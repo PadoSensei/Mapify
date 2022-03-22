@@ -2,9 +2,9 @@ import React, { useState, useCallback } from 'react'
 import ReactFlow, { ReactFlowProvider, addEdge, removeElements, Controls, Background, MiniMap, useZoomPanHelper } from 'react-flow-renderer';
 import { useStore } from '../store/Store'
 import { useParams } from "react-router-dom"
+import { addMapFlow } from '../store/mindMapReducer';
 import Details from './Details'
 import css from './map.module.css'
-import { addMapFlow, addMindMap, getMindMap } from '../store/mindMapReducer';
 
 
 const onLoad = (reactFlowInstance) => {
@@ -13,7 +13,7 @@ const onLoad = (reactFlowInstance) => {
 
 function Map() {
     //UseState
-    const [name, setName] = useState('')
+    const [name, setName] = useState("")
     const [rfInstance, setRfInstance] = useState(null);
     const [elements, setElements] = useState([])
     const params = useParams();
@@ -24,48 +24,41 @@ function Map() {
     const [captureElementClick, setCaptureElementClick] = useState(true);
     
     const targetMap = mindMaps.find(x => x.mapId === parseInt(params.mapId)); 
-    const [detailsNode, setDetailsNode] = useState(targetMap)
+    const [detailsNode, setDetailsNode] = useState('')
 
     const flowkey = `map-flow-${params.mapId}`
     
-
-    
     // Bug: Renders nodes created in Map, doesn't render info from Home screen
-    
-    // React.useEffect(() => {
-    //     if(targetMap.data.elements){
-    //         setElements(targetMap.data.elements)
-    //     } else {
-    //         setElements(targetMap.data)
-    //     }
-    // },[])
 
     React.useEffect(() => {
-        //onSave()
         onRestore()
+        console.log(mindMaps, "State called on restore")
     }, [])
 
     const onSave = useCallback(() => {
         if(rfInstance) {
-            const map = rfInstance.toObject();
-            console.log(map)
+            const reactFlowObject = rfInstance.toObject();
+            console.log(reactFlowObject, "react-flow object")
+            // Loop finds current map in state 
+            // Adds object to its mapData
             for (const mindMap of mindMaps){
                 if (mindMap.key === flowkey){
-                    mindMap.data = map
+                    mindMap.mapData = reactFlowObject
                 }
             }
+            // Pushes updated state back to global
             dispatch(addMapFlow(
                 mindMaps
             ))
         }
+        console.log("object saved to state")
     }, [rfInstance, dispatch, flowkey, mindMaps]);
 
+    // Check map object for prev saved elements
+    // Else set empty array
     const onRestore = useCallback(() => {
-    
           if (targetMap) {
-            //const [x = 0, y = 0] = flow.position;
-            setElements(targetMap.data.elements || []);
-            //transform({ x, y, zoom: flow.zoom || 0 });
+            setElements(targetMap.mapData.elements || []);
           }
         })
 
@@ -74,42 +67,43 @@ function Map() {
         if (data.length === 0) {
             return 1;
         }
-        const maxId = Math.max(...data.map(x => x.id));
+        const maxId = Math.max(...data.map(x => parseInt(x.id)));
         return maxId + 1;
     }
 
-    // Bug - id's are assigned incorrectly, [1,3,5,7,9....]
-    const addNode = () => {
-        //console.log(elements)
-        const firstNode = [targetMap.data] || [targetMap.data.elements]
-        //console.log(firstNode)
+    function addNode () {
         const newNodeObject = {
-            id: (elements.length+1).toString(),
-            // id: nextId(elements),
+            id: nextId(elements).toString(),
+            mapId: params.mapId,
             data: {
-                label: `${name}`, 
-                details: 
-                {
-                    comment: "I can carry a payload"
-                }
+                label: `${name}`,
+                date: Date.now(),
+                testable: false,
+                description: "helloWorld", 
+                testArray:[]
             },
             position: {x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight}
         }
-        setElements([...firstNode, ...elements, newNodeObject]);
+        setElements([ ...elements, newNodeObject]);
+        setName("");
     };
 
+    function nameHandler(event) {
+        setName(event.target.value);
+      }
+
+    // Refactor to do this without using backspace
     function onElementsRemove (elementsToRemove) {
         setElements((els) => removeElements(elementsToRemove, els));
     }
-
-    
     const onConnect = (params) => setElements(e => addEdge(params, e));
 
     function onElementClick(event, element) {
         const targetNode = elements.find(x => x.id === element.id);
         setDetailsNode(targetNode)
+        console.log(targetNode, "targetNode displayed in Details")
     }
-  
+
     return (
       <div className={css.container}>
         <ReactFlowProvider>
@@ -137,7 +131,8 @@ function Map() {
         </ReactFlowProvider>
         <div>
             <input type="text"
-            onChange={e => setName(e.target.value)}
+            onChange={nameHandler}
+            value={name}
             name="title"/>
             <button
             onClick={addNode}
@@ -145,7 +140,10 @@ function Map() {
             >Add Node</button>
             <button onClick={onSave}>Save MindMap</button>
         </div>
-            <Details targetMap={detailsNode}/>
+            {
+              detailsNode !== "" &&  
+                (<Details targetMap={detailsNode}/>)
+            }
       </div>
   )
 }

@@ -8,7 +8,8 @@ const actions = {
     ADD_MINDMAP: 'ADD_MAP',
     REMOVE_MINDMAP: "REMOVE_MAP",
     GET_MINDMAP: "GET_MAP",
-    ADD_MAP_FLOW: "ADD_MAP_FLOW"
+    ADD_MAP_FLOW: "ADD_MAP_FLOW",
+    UPDATE_MAP_NODE: "UPDATE_NODE"
 };
 
 export const addMindMap = (payload) => ({
@@ -31,6 +32,11 @@ export const addMapFlow = (payload) => ({
     payload,
 })
 
+export const updateMapNode = (payload) => ({
+    type: actions.UPDATE_MAP_NODE,
+    payload,
+})
+
 export const mindMapReducer = (state = initialState, action) => {
     switch (action.type){
         case actions.ADD_MINDMAP: 
@@ -45,8 +51,6 @@ export const mindMapReducer = (state = initialState, action) => {
             const targetMap = state.mindMaps.filter(
                 (map) => map.mapId === action.payload.mapId
             )
-            // console.log(targetMap)
-            // console.log(action.payload)
             return {
                 targetMap
             }
@@ -70,6 +74,28 @@ export const mindMapReducer = (state = initialState, action) => {
                 mindMaps: updatedMapFlows
             }
             }
+        case actions.UPDATE_MAP_NODE: {
+            // destructure payload
+            const { testable, description } = action.payload.data
+            const { mapId, nodeId } = action.payload
+            
+            let mindMaps = state.mindMaps // filter this by mapId, filter by node, replace node
+            
+            const targetMap = map => map.mapId === mapId
+            const targetNode = node => node.id === nodeId
+
+            const mapToUpdate = mindMaps.findIndex(targetMap)
+            const nodeToUpdate = mindMaps[mapToUpdate].mapData.elements.findIndex(targetNode)
+
+            // Update state object directly then return
+            mindMaps[mapToUpdate].mapData.elements[nodeToUpdate].data.testable = testable
+            mindMaps[mapToUpdate].mapData.elements[nodeToUpdate].data.description = description
+
+            return {
+                ...state,
+                mindMaps: mindMaps
+            }
+        }
         default:
             return state
     }

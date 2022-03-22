@@ -27,14 +27,7 @@ function Home() {
             comment: "we are the comment",
             mapId: nextMapId(),
             key: flowkey,
-            data: [{
-                id: 1,
-                type: 'input', // input node system required for colour coding nodes in map.
-                data: { 
-                label: <div>DummyData</div> 
-                },
-                position: { x: 250, y: 25 } ,   
-                }],
+            mapData: [],
         }))
     }
 
