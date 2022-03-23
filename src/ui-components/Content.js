@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import React from 'react'
 import css from './content.module.css'
 import Toolbar from './Toolbar'

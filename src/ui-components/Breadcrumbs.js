@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react'
 import useBreadcrumbs from 'use-react-router-breadcrumbs'
 import { useNavigate } from 'react-router'

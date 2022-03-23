@@ -1,3 +1,4 @@
+/* eslint-disable no-alert, no-console */
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useForm } from 'react-hook-form'
@@ -31,6 +32,7 @@ function Details({ targetMap }) {
       nodeId: targetMap.id,
       data: formData,
     }
+    /* eslint-disable no-alert, no-console */
     console.log(payload, 'payload sent to reducer')
     dispatch(updateMapNode(payload))
   }
@@ -42,7 +44,7 @@ function Details({ targetMap }) {
   useEffect(() => {
     setFormDescription(targetMap.data.description)
     setFormTestable(data.testable)
-  }, [targetMap])
+  }, [targetMap, data.testable])
 
   // const changeName = (e) => {
   //         const name = e.target.value;

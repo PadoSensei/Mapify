@@ -34,9 +34,11 @@ function Home() {
 
   function handleDelete() {
     if (selectedMap === '') {
+      // eslint-disable-next-line
       alert('No map selected!')
     } else {
       dispatch(removeMindMap(selectedMap))
+      // eslint-disable-next-line
       console.log('deleted')
     }
   }

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useCallback } from 'react'
 // import PropTypes from 'prop-types'
 import ReactFlow, {
@@ -61,6 +62,7 @@ function Map() {
       // Pushes updated state back to global
       dispatch(addMapFlow(mindMaps))
     }
+    // eslint-disable-next-line
     console.log('object saved to state')
   }, [rfInstance, dispatch, flowkey, mindMaps])
 

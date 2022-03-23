@@ -7,7 +7,6 @@ export const initialState = {
 const actions = {
   ADD_MINDMAP: 'ADD_MAP',
   REMOVE_MINDMAP: 'REMOVE_MAP',
-  GET_MINDMAP: 'GET_MAP',
   ADD_MAP_FLOW: 'ADD_MAP_FLOW',
   UPDATE_MAP_NODE: 'UPDATE_NODE',
 }
@@ -19,11 +18,6 @@ export const addMindMap = (payload) => ({
 
 export const removeMindMap = (payload) => ({
   type: actions.REMOVE_MINDMAP,
-  payload,
-})
-
-export const getMindMap = (payload) => ({
-  type: actions.GET_MINDMAP,
   payload,
 })
 
@@ -45,15 +39,6 @@ export const mindMapReducer = (action, state = initialState) => {
         ...state,
         mindMaps: state.mindMaps.concat(action.payload),
       }
-    case actions.GET_MINDMAP:
-      // Returns requested mindmap, called on Map Screen
-      // Refactor: Don't think this is required
-      const targetMap = state.mindMaps.filter(
-        (map) => map.mapId === action.payload.mapId,
-      )
-      return {
-        targetMap,
-      }
     case actions.REMOVE_MINDMAP: {
       // Removes Mindmapfrom state, called on Home Screen
       const filteredMaps = state.mindMaps.filter(
@@ -67,8 +52,6 @@ export const mindMapReducer = (action, state = initialState) => {
     case actions.ADD_MAP_FLOW: {
       // Adds / updates mindmap flow to Mindmap state, called on Map Screen
       const updatedMapFlows = action.payload
-      console.log(action.payload)
-
       return {
         ...state,
         mindMaps: updatedMapFlows,
