@@ -7,10 +7,10 @@ import Home from '../ui-components/Home'
 function HomePage() {
   return (
     <>
-    <Header />
-    <LeftMenu />
-    <Breadcrumbs />
-    <Home />
+      <Header />
+      <LeftMenu />
+      <Breadcrumbs />
+      <Home />
     </>
   )
 }

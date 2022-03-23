@@ -7,10 +7,10 @@ import Help from '../ui-components/Help'
 function HelpPage() {
   return (
     <>
-        <Header />
-        <LeftMenu />
-        <Breadcrumbs />
-        <Help />
+      <Header />
+      <LeftMenu />
+      <Breadcrumbs />
+      <Help />
     </>
   )
 }

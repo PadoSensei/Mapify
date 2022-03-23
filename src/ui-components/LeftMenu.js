@@ -1,28 +1,27 @@
 import React from 'react'
-import css from "./leftmenu.module.css"
+import { useNavigate } from 'react-router'
+import css from './leftmenu.module.css'
 import Toolbar from './Toolbar'
-import { useNavigate } from 'react-router';
-
 
 function LeftMenu() {
-  let navigate = useNavigate();
-  function goHome(){
+  const navigate = useNavigate()
+  function goHome() {
     navigate('/')
   }
-  function goToHelp(){
+  function goToHelp() {
     navigate('/help')
   }
-  function goToProfile(){
+  function goToProfile() {
     navigate('/profile')
   }
   const list = [
-    {name: "home", onClick: goHome},
-    {name: "help", onClick: goToHelp },
-    {name: "profile", onClick: goToProfile}
+    { name: 'home', onClick: goHome },
+    { name: 'help', onClick: goToHelp },
+    { name: 'profile', onClick: goToProfile },
   ]
   return (
     <div className={css.container}>
-      <Toolbar list={list} type="primary" location={["vertical"]} />
+      <Toolbar list={list} type="primary" location={['vertical']} />
     </div>
   )
 }

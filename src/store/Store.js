@@ -1,14 +1,21 @@
-import React from 'react';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-const Store = React.createContext();
-Store.displayName = 'Store';
+Store.propTypes = {
+  children: PropTypes.any,
+  initialState: PropTypes.any,
+  reducer: PropTypes.any,
+}
 
-export const useStore = () => React.useContext(Store);
+const Store = React.createContext()
+Store.displayName = 'Store'
 
-export const StoreProvider = ({ children, initialState, reducer }) => {
-    const [globalState, dispatch] = React.useReducer(reducer, initialState)
-    
+export const useStore = () => React.useContext(Store)
+
+export function StoreProvider({ children, initialState, reducer }) {
+  const [globalState, dispatch] = React.useReducer(reducer, initialState)
+
   return (
     <Store.Provider value={[globalState, dispatch]}>{children}</Store.Provider>
-  );
-};
+  )
+}

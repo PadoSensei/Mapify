@@ -7,10 +7,10 @@ import Profile from '../ui-components/Profile'
 function ProfilePage() {
   return (
     <>
-    <Header />
-    <LeftMenu />
-    <Breadcrumbs />
-    <Profile />
+      <Header />
+      <LeftMenu />
+      <Breadcrumbs />
+      <Profile />
     </>
   )
 }

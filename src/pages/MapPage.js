@@ -7,10 +7,10 @@ import Map from '../ui-components/Map'
 function MapPage() {
   return (
     <>
-    <Header />
-    <LeftMenu />
-    <Breadcrumbs />
-    <Map />
+      <Header />
+      <LeftMenu />
+      <Breadcrumbs />
+      <Map />
     </>
   )
 }
